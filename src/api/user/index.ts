@@ -3,6 +3,7 @@ import * as user from './controller';
 
 let userRouter = express.Router();
 
-userRouter.get('/', user.getUser);
+userRouter.post('/', user.createUser);
+userRouter.post('/signin', user.signin);
 
 export default userRouter;

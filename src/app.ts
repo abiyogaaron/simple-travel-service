@@ -4,7 +4,8 @@ import cors from 'cors';
 import http from 'http';
 
 import config from './config/environment';
-import routes from './route';
+import routes from './routes';
+import { sequelize as db } from './db/models';
 
 const app = express();
 
@@ -15,11 +16,17 @@ routes(app);
 
 const server = http.createServer(app);
 
-function startServer() {
-  console.log('config --> ', config);
-  server.listen(config.port, parseInt(config.host), function () {
-    console.log('Express server listening on %d, in %s mode %s', config.port, config.host, config.env);
-  });
+async function startServer() {
+  try {
+    await db.authenticate();
+    server.listen(config.port, parseInt(config.host), () => {
+      console.log('Express server listening on %d, in %s mode %s', config.port, config.host, config.env);
+    });
+  } catch (err) {
+    console.error('error: ', err);
+    db.close();
+    process.exit(1);
+  }
 }
 
 setImmediate(startServer);

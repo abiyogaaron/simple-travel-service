@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  simple-travel-service-db:
+    image: mysql:5.7.41
+    container_name: simple-travel-service-db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: secret123
+      MYSQL_ROOT_HOST: "%"
+    restart: on-failure
