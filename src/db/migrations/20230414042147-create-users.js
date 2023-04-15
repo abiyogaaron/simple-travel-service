@@ -17,7 +17,6 @@ module.exports = {
           email: {
             type: new DataTypes.STRING(128),
             allowNull: false,
-            unique: true,
           },
           password: {
             type: new DataTypes.STRING(128),
@@ -36,17 +35,26 @@ module.exports = {
             allowNull: false,
           },
           createdAt: {
-            type: new DataTypes.DATE,
+            type: 'TIMESTAMP',
             allowNull: false,
-            defaultValue: DataTypes.fn('NOW'),
+            defaultValue: DataTypes.fn('CURRENT_TIMESTAMP'),
           },
           updatedAt: {
-            type: new DataTypes.DATE,
+            type: 'TIMESTAMP',
             allowNull: true,
             defaultValue: DataTypes.fn('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
           },
         },
         { transaction: transaction },
+      );
+
+      await queryInterface.addIndex(
+        'users',
+        ['email'],
+        {
+          unique: true,
+          transaction: transaction,
+        },
       );
     } catch (err) {
       console.log('err migration create_user: ', err);

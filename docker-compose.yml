@@ -9,4 +9,5 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: secret123
       MYSQL_ROOT_HOST: "%"
+      TZ: Asia/Jakarta
     restart: on-failure

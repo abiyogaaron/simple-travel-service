@@ -34,7 +34,6 @@ const User = sequelize.define<IUserInstance>(
     email: {
       type: new DataTypes.STRING(128),
       allowNull: false,
-      unique: true,
     },
     password: {
       type: new DataTypes.STRING(128),
@@ -52,6 +51,14 @@ const User = sequelize.define<IUserInstance>(
       type: new DataTypes.STRING(128),
       allowNull: false,
     },
+  },
+  {
+    indexes: [
+      {
+        unique: true,
+        fields: ['email'],
+      },
+    ],
   },
 );
 
