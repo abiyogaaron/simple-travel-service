@@ -11,8 +11,14 @@ create_migration:
 create_model:
 	npx sequelize model:create --name ${name} --attributes ${attributes}
 migrate_up:
-	npx sequelize db:migrate
+	npm run compile& npx sequelize db:migrate --migrations-path './dist/db/migrations'
 migrate_down:
-	npx sequelize db:migrate:undo --name ${name}
+	npm run compile& npx sequelize db:migrate:undo --name ${name} --migrations-path './dist/db/migrations'
+migrate_down_all:
+	npm run compile& npx sequelize db:migrate:undo:all --migrations-path './dist/db/migrations'
+create_seeder:
+	npx sequelize seed:create --name ${name}
+seeder_up_all:
+	npm run compile& npx sequelize db:seed:all --seeders-path './dist/db/seeders'
 
-.PHONY: mysql createdb dropdb migrate_up create_migration migration_init
+.PHONY: mysql createdb dropdb migrate_up create_migration migration_init migrate_down_all create_seeder seeder_up_all
