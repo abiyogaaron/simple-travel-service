@@ -1,13 +1,13 @@
 # Simple-travel-service using node - typescript
 
+## How to run the project ?
+
 ### Requirement
 1. Docker (20.10.24)
 2. Node (14.21.3)
 3. MakeFile
 4. MySql (5.7.41)
 5. Redis (7.0.0)
-
-## How to run the project ?
 
 ### Setup
 1. run `npm install`
@@ -22,10 +22,12 @@
 2. open `localhost:3000`
 
 ## Specifications
-- using `redis` with 1 master and 1 replica
+- using `mysql` as the main database
+- using `redis` with 1 master and 1 replica for database caching
 - using `typescript` as development languange
 - using `swc (Rust Based)` as the compiler from `typescript` to `javascript`
 - using `sequelize` as an ORM and as a db cli
+- using `nodejs` as the runtime
 
 ## Routes
 currently this project only have 2 routes
