@@ -75,7 +75,7 @@ const migration: Migration = {
         { transaction: transaction },
       );
     } catch (err) {
-      console.log('err migration create_user: ', err);
+      console.log('err migration create flights: ', err);
       await transaction.rollback();
       throw err;
     }

@@ -16,6 +16,12 @@ class Database {
         : new Sequelize(config.database, config.username, config.password, {
           host: config.host,
           dialect: config.dialect,
+          retry: {
+            match: [/Deadlock/i],
+            max: 3,
+            backoffBase: 1000,
+            backoffExponent: 1.5,
+          },
         });
     }
     return Database.sequelize;
