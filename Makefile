@@ -1,5 +1,9 @@
+container_up_all:
+	docker-compose up -d
 mysql:
-	docker-compose up -d simple-travel-service-db
+	docker-compose up -d mysql
+redis:
+	docker-compose up -d redis-master& docker-compose up -d redis-slave
 createdb:
 	npx sequelize db:create
 dropdb:

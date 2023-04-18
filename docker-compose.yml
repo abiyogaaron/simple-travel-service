@@ -1,13 +1,49 @@
 version: "3.9"
 
 services:
-  simple-travel-service-db:
+  mysql:
     image: mysql:5.7.41
-    container_name: simple-travel-service-db
+    container_name: simple-travel-service-mysql
     ports:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: secret123
       MYSQL_ROOT_HOST: "%"
       TZ: Asia/Jakarta
+    volumes:
+      - /var/lib/mysql
     restart: on-failure
+    mem_limit: 512m
+    networks:
+      - mysqlnetwork
+
+  redis-master:
+    image: redis:7.0
+    container_name: master
+    ports:
+      - "6379:6379"
+    command: /bin/bash -c 'redis-server --appendonly yes --requirepass secret456 --maxclients 10000 --tcp-keepalive 0'
+    volumes:
+      - /data
+    sysctls:
+      - net.core.somaxconn=65535
+    mem_limit: 96m
+    networks:
+      - mysqlnetwork
+  
+  redis-slave:
+    image: redis:7.0
+    container_name: slave
+    ports:
+      - "6380:6379"
+    command: redis-server /etc/redis.conf --replicaof master 6379
+    depends_on:
+      - redis-master
+    volumes:
+      - ./redis.conf:/etc/redis.conf
+    networks:
+      - mysqlnetwork
+
+networks:
+  mysqlnetwork:
+    driver: bridge
