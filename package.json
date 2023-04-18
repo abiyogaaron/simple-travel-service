@@ -8,10 +8,13 @@
     "compile": "swc src --only --out-dir dist --copy-files",
     "watch-compile": "swc src -w --out-dir dist --copy-files",
     "watch-dev": "dotenv_config_path=development && nodemon --watch \"dist/**/*\" -e js ./dist/app.js",
-    "build:test": "dotenv_config_path=test && swc src -d dist --copy-files",
-    "build:prod": "dotenv_config_path=production && swc src -d dist --copy-files",
+    "prebuild:test": "NODE_ENV=test node prebuild.js",
+    "prebuild:prod": "NODE_ENV=production node prebuild.js",
+    "build:test": "npm run prebuild:test && dotenv_config_path=test && swc src -d dist --config-file .swcrcNonDev --no-swcrc --copy-files",
+    "build:prod": "npm run prebuild:prod && dotenv_config_path=production && swc src -d dist --config-file .swcrcNonDev --no-swcrc --copy-files",
     "lint:fix": "eslint '*/**/*.{js,ts}' --fix",
     "lint": "eslint '*/**/*.{js,ts}'",
+    "start": "node ./dist/app.js",
     "prepare": "husky install"
   },
   "repository": {
@@ -31,7 +34,7 @@
     }
   },
   "lint-staged": {
-    "*.{js,ts,tsx}": [
+    "*.{js,ts}": [
       "eslint --fix"
     ]
   },
