@@ -12,20 +12,20 @@ const migration: Migration = {
             autoIncrement: true,
             primaryKey:  true,
           },
-          airportFrom: {
+          airport_from: {
             type: Sequelize.DataTypes.STRING(64),
             allowNull: false,
           },
-          airportDestination: {
+          airport_destination: {
             type: Sequelize.DataTypes.STRING(64),
             allowNull: false,
           },
-          departureTime: {
+          departure_time: {
             type: 'TIMESTAMP',
             allowNull: true,
             defaultValue: '1970-01-01 00:00:01',
           },
-          arrivalTime: {
+          arrival_time: {
             type: 'TIMESTAMP',
             allowNull: true,
             defaultValue: '1970-01-01 00:00:01',
@@ -34,26 +34,22 @@ const migration: Migration = {
             type: Sequelize.DataTypes.STRING(64),
             allowNull: false,
           },
-          price: {
-            type: Sequelize.DataTypes.INTEGER,
-            allowNull: false,
-          },
-          isRefundable: {
+          is_refundable: {
             type: Sequelize.DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: false,
           },
-          isRescheduleable: {
+          is_rescheduleable: {
             type: Sequelize.DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: true,
           },
-          createdAt: {
+          created_at: {
             type: 'TIMESTAMP',
             allowNull: false,
             defaultValue: Sequelize.fn('CURRENT_TIMESTAMP'),
           },
-          updatedAt: {
+          updated_at: {
             type: 'TIMESTAMP',
             allowNull: true,
             defaultValue: Sequelize.fn('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
@@ -64,14 +60,14 @@ const migration: Migration = {
       
       await queryInterface.addIndex(
         'flights',
-        ['departureTime'],
+        ['departure_time'],
         { transaction: transaction },
       );
 
       //Composite Index
       await queryInterface.addIndex(
         'flights',
-        ['airportFrom', 'airportDestination'],
+        ['airport_from', 'airport_destination'],
         { transaction: transaction },
       );
     } catch (err) {

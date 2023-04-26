@@ -5,5 +5,6 @@ declare module 'yup' {
   interface StringSchema<TType, TContext, TDefault, TFlags> extends yup.StringSchema {
     isAirport(message: string): StringSchema
     isAirline(message: string): StringSchema
+    isTravelClass(message: string): StringSchema
   }
 }

@@ -1,8 +1,22 @@
 import { Migration } from 'sequelize-cli';
 import moment from 'moment-timezone';
 
-import { EAirline, EAirport } from '../../types';
+import { 
+  EAirline, 
+  EAirport,
+  ETravelClass,
+} from '../../types';
 import { IFlightCreationAttributes } from '../models/flights';
+import { ISeatDetailsCreationAttributes } from '../models/seatDetails';
+
+function randomTravelClass() {
+  const dummyTravelClass: ETravelClass[] = [
+    ETravelClass.BUSINESS_CLASS,
+    ETravelClass.ECONOMY_CLASS,
+    ETravelClass.PREMIUM_ECONOMY_CLASS,
+  ];
+  return dummyTravelClass[Math.floor(Math.random() * dummyTravelClass.length)];
+}
 
 function randomAirlines() {
   const dummyAirlines: EAirline[] = [
@@ -73,6 +87,15 @@ function randomPrice() {
   return Math.floor(Math.random() * 500000) + 3000000;
 }
 
+function randomCapacity(travelClass: ETravelClass) {
+  const decisionObj: Record<ETravelClass, number> = {
+    [ETravelClass.BUSINESS_CLASS]: 15,
+    [ETravelClass.ECONOMY_CLASS]: 40,
+    [ETravelClass.PREMIUM_ECONOMY_CLASS]: 25,
+  };
+  return Math.floor(Math.random() * decisionObj[travelClass]) + 0;
+}
+
 function randomBoolean() {
   return Math.random() > 0.5;
 }
@@ -80,25 +103,38 @@ function randomBoolean() {
 export const migration: Migration = {
   async up(queryInterface) {
     const maxData = 10000;
-    let arrDummy: IFlightCreationAttributes[] = [];
+    let arrDummyFlights: IFlightCreationAttributes[] = [];
+    let arrDummySeats: ISeatDetailsCreationAttributes[] = [];
 
     for (let i = 0; i < maxData; i++) {
       const departTime = randomDate(true);
-      arrDummy.push({
-        airportFrom: randomAirport(),
-        airportDestination: randomAirport(),
+      arrDummyFlights.push({
+        airport_from: randomAirport(),
+        airport_destination: randomAirport(),
         airlines: randomAirlines(),
-        price: randomPrice(),
-        isRefundable: randomBoolean(),
-        isRescheduleable: randomBoolean(),
-        arrivalTime: randomDate(false, departTime),
-        departureTime: departTime,
+        is_refundable: randomBoolean(),
+        is_rescheduleable: randomBoolean(),
+        arrival_time: randomDate(false, departTime),
+        departure_time: departTime,
       });
+
+      for (let j = 0; j < 1; j++) {
+        const travelClass = randomTravelClass();
+        arrDummySeats.push({
+          flight_id: (i + 1),
+          travel_class: travelClass,
+          capacity: randomCapacity(travelClass),
+          price: randomPrice(),
+        });
+      }
     }
-    await queryInterface.bulkInsert('flights', arrDummy);
+
+    await queryInterface.bulkInsert('flights', arrDummyFlights);
+    await queryInterface.bulkInsert('seat_details', arrDummySeats);
   },
   async down(queryInterface) {
     await queryInterface.bulkDelete('flights', {}, {});
+    await queryInterface.bulkDelete('seat_details', {}, {});
   },
 };
 

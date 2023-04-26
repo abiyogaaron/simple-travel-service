@@ -24,5 +24,7 @@ create_seeder:
 	npx sequelize seed:create --name ${name}
 seeder_up_all:
 	npm run compile& npx sequelize db:seed:all --seeders-path './dist/db/seeders'
+clear_redis:
+	docker exec -it master redis-cli -a secret456 FLUSHALL
 
 .PHONY: mysql createdb dropdb migrate_up create_migration migration_init migrate_down_all create_seeder seeder_up_all

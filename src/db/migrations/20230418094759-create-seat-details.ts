@@ -4,32 +4,33 @@ const migration: Migration = {
   async up(queryInterface, Sequelize) {
     const transaction = await queryInterface.sequelize.transaction();
     try {
-      await queryInterface.createTable(
-        'users',
+      await queryInterface.createTable('seat_details',
         {
           id: {
             type: Sequelize.INTEGER.UNSIGNED,
             autoIncrement: true,
             primaryKey:  true,
           },
-          email: {
-            type: new Sequelize.STRING(128),
+          flight_id: {
+            type: Sequelize.INTEGER.UNSIGNED,
+            references: {
+              model: {
+                tableName: 'seat_details',
+              },
+              key: 'id',
+            },
             allowNull: false,
           },
-          password: {
-            type: new Sequelize.STRING(128),
-            allowNull: false,
-          },
-          salt: {
+          travel_class: {
             type: new Sequelize.STRING(32),
             allowNull: false,
           },
-          first_name: {
-            type: new Sequelize.STRING(128),
+          price: {
+            type: Sequelize.INTEGER,
             allowNull: false,
           },
-          last_name: {
-            type: new Sequelize.STRING(128),
+          capacity: {
+            type: Sequelize.INTEGER.UNSIGNED,
             allowNull: false,
           },
           created_at: {
@@ -43,26 +44,22 @@ const migration: Migration = {
             defaultValue: Sequelize.fn('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
           },
         },
-        { transaction: transaction },
       );
 
       await queryInterface.addIndex(
-        'users',
-        ['email'],
-        {
-          unique: true,
-          transaction: transaction,
-        },
+        'seat_details',
+        ['flight_id'],
+        { transaction: transaction },
       );
     } catch (err) {
-      console.log('err migration create_user: ', err);
+      console.log('err migration seat details: ', err);
       await transaction.rollback();
       throw err;
     }
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable('users');
+    await queryInterface.dropTable('seat_details');
   },
 };
 

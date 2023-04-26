@@ -24,12 +24,15 @@ yup.addMethod(yup.string, 'isAirline', function (message) {
 });
 
 export const getFlightsSchema = yup.object<TReqBodyGetFlights>({
-  airportFrom: yup.string()
+  airport_from: yup.string()
+    .strict(true)
     .isAirport('airport from field not an airport type !')
     .required('airport from field is required'),
-  airportDestination: yup.string()
+  airport_destination: yup.string()
+    .strict(true)
     .isAirport('airport destination field not an airport type !')
     .required('airport destination field is required'),
-  departureTime: yup.string()
+  departure_time: yup.string()
+    .strict(true)
     .required('departure time is required'),
 });

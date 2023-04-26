@@ -10,8 +10,8 @@ interface IUserAttributes {
   email: string;
   password: string;
   salt: string;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
 }
 
 export interface IUserCreationAttributes extends Optional<IUserAttributes, 'id'> {}
@@ -43,16 +43,17 @@ const User = sequelize.define<IUserInstance>(
       type: new DataTypes.STRING(32),
       allowNull: false,
     },
-    firstName: {
+    first_name: {
       type: new DataTypes.STRING(128),
       allowNull: false,
     },
-    lastName: {
+    last_name: {
       type: new DataTypes.STRING(128),
       allowNull: false,
     },
   },
   {
+    underscored: true,
     indexes: [
       {
         unique: true,

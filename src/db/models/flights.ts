@@ -3,28 +3,30 @@ import {
   Model,
   Optional,
 } from 'sequelize';
-import { EAirline, EAirport } from '../../types';
 import { sequelize } from '.';
+
+import { ISeatDetailsInstance } from './seatDetails';
+import { EAirline, EAirport } from '../../types';
 
 interface IFlightAttributes {
   id: number;
-  airportFrom: EAirport,
-  airportDestination: EAirport,
-  departureTime: Date,
-  arrivalTime: Date,
+  airport_from: EAirport,
+  airport_destination: EAirport,
+  departure_time: Date,
+  arrival_time: Date,
   airlines: EAirline,
-  price: number,
-  isRefundable: boolean,
-  isRescheduleable: boolean,
+  is_refundable: boolean,
+  is_rescheduleable: boolean,
 }
 
 export interface IFlightCreationAttributes extends Optional<IFlightAttributes, 'id'> {}
 export interface IFlightReturnedAttributes extends Required<IFlightAttributes> {}
 
-interface IFlightInstance extends Model<IFlightAttributes, IFlightCreationAttributes>, 
+export interface IFlightInstance extends Model<IFlightAttributes, IFlightCreationAttributes>, 
   IFlightAttributes {
   createdAt?: Date;
   updatedAt?: Date;
+  seat_details?: ISeatDetailsInstance[];
 }
 
 const Flight = sequelize.define<IFlightInstance>(
@@ -35,20 +37,20 @@ const Flight = sequelize.define<IFlightInstance>(
       autoIncrement: true,
       primaryKey:  true,
     },
-    airportFrom: {
+    airport_from: {
       type: DataTypes.STRING(64),
       allowNull: false,
     },
-    airportDestination: {
+    airport_destination: {
       type: DataTypes.STRING(64),
       allowNull: false,
     },
-    departureTime: {
+    departure_time: {
       type: 'TIMESTAMP',
       allowNull: true,
       defaultValue: '1970-01-01 00:00:01',
     },
-    arrivalTime: {
+    arrival_time: {
       type: 'TIMESTAMP',
       allowNull: true,
       defaultValue: '1970-01-01 00:00:01',
@@ -57,28 +59,25 @@ const Flight = sequelize.define<IFlightInstance>(
       type: DataTypes.STRING(64),
       allowNull: false,
     },
-    price: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    isRefundable: {
+    is_refundable: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false,
     },
-    isRescheduleable: {
+    is_rescheduleable: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: true,
     },
   },
   {
+    underscored: true,
     indexes: [
       {
-        fields: ['departureTime'],
+        fields: ['departure_time'],
       },
       {
-        fields: ['airportFrom', 'airportDestination'],
+        fields: ['airport_from', 'airport_destination'],
       },
     ],
   },

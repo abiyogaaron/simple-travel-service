@@ -15,10 +15,11 @@ import {
   IRespBody,
 } from '../../types';
 
-import User, { 
+import { 
   IUserCreationAttributes, 
   IUserReturnedAttributes,
 } from '../../db/models/users';
+import { User } from '../../db/relationships';
 
 import validator from '../../helper/validator';
 import { 
@@ -27,7 +28,7 @@ import {
   updateUserSchema,
 } from './rule';
 
-export type TReqBodyCreateUser = Omit<IUserCreationAttributes, 'id' | 'createdAt' | 'salt' | 'updatedAt'>;
+export type TReqBodyCreateUser = Omit<IUserCreationAttributes, 'salt'>;
 export type TReqBodySignin = Pick<IUserCreationAttributes, 'email' | 'password'>;
 
 type TResBodyUpdateUser = { affectedRow: number };
@@ -73,11 +74,12 @@ export const createUser = async (
 
     const createdUser = await User.create({
       email: req.body.email,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
       password: hashedPassword,
       salt: salt,
     });
+
     return res.status(201).json({ message: 'user created', data: createdUser.get() });
   } catch (e) {
     console.error('Create User API Error: ', e);
@@ -100,8 +102,8 @@ export const updateUser = async (
 
     const data: Omit<TReqBodyCreateUser, 'email'> = { 
       password: req.body.password,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
     };
     if (data.password) {
       const foundedUser = await User.findOne({ where: { email: req.body.email } });

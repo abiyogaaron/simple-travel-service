@@ -47,3 +47,9 @@ export enum EAirline {
   SRIWIJAYA = 'Sriwijaya',
   NAM_AIR = 'Nam Air',
 }
+
+export enum ETravelClass {
+  BUSINESS_CLASS = 'business',
+  PREMIUM_ECONOMY_CLASS = 'premium economy',
+  ECONOMY_CLASS = 'economy',
+}

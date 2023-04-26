@@ -5,23 +5,28 @@ import {
 import moment from 'moment-timezone';
 import { Op } from 'sequelize';
 
-import Flight, {
+import {
   IFlightCreationAttributes,
-  IFlightReturnedAttributes,
+  IFlightInstance,
 } from '../../db/models/flights';
+import { 
+  Flight, 
+  SeatDetail,
+} from '../../db/relationships';
 import redis from '../../redis';
 
 import validator from '../../helper/validator';
 import { 
   getFlightsSchema,
 } from './rule';
-import { IRespBody } from 'src/types';
+import { IRespBody } from '../../types';
 
-export type TReqBodyGetFlights = Pick<IFlightCreationAttributes, 'airportFrom' | 'airportDestination' | 'departureTime'>;
+export type TReqBodyGetFlights = Pick<IFlightCreationAttributes, 'airport_from' | 'airport_destination' | 'departure_time'>;
+interface TRespBodyGetFlights extends IFlightInstance {}
 
 export const getFlights = async (
   req: Request<unknown, unknown, TReqBodyGetFlights>, 
-  res: Response<IRespBody<IFlightReturnedAttributes[]>>,
+  res: Response<IRespBody<TRespBodyGetFlights[]>>,
 ) => {
   try {
     const { isValid, errMsg } = await validator(getFlightsSchema, req.body);
@@ -30,16 +35,16 @@ export const getFlights = async (
     }
 
     const { 
-      airportFrom, 
-      airportDestination, 
-      departureTime,
+      airport_from, 
+      airport_destination, 
+      departure_time,
     } = req.body;
-    const departureDate = moment(departureTime).tz('Asia/Jakarta');
-    const key = `${airportFrom}:${airportDestination}:${departureDate.format('YYYY-MM-DD')}`;
+    const departureDate = moment(departure_time).tz('Asia/Jakarta');
+    const key = `${airport_from}:${airport_destination}:${departureDate.format('YYYY-MM-DD')}`;
 
     const cacheFlights = await redis.get(key);
     if (cacheFlights) {
-      const cacheResult: IFlightReturnedAttributes[] = JSON.parse(cacheFlights);
+      const cacheResult: TRespBodyGetFlights[] = JSON.parse(cacheFlights);
 
       console.log('Return from redis slave: ', cacheFlights);
       return res.status(200).json({ 
@@ -65,15 +70,19 @@ export const getFlights = async (
     const flights = await Flight.findAll({
       where: {
         [Op.and]: [
-          { airportFrom: airportFrom },
-          { airportDestination: airportDestination },
-          { departureTime: {
+          { airport_from: airport_from },
+          { airport_destination: airport_destination },
+          { departure_time: {
             [Op.gte]: startTime.valueOf(),
           } },
-          { departureTime: {
+          { departure_time: {
             [Op.lte]: endTime.valueOf(),
           } },
         ],
+      },
+      include: {
+        model: SeatDetail,
+        required: true,
       },
     });
 
