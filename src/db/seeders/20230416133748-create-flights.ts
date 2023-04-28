@@ -9,13 +9,13 @@ import {
 import { IFlightCreationAttributes } from '../models/flights';
 import { ISeatDetailsCreationAttributes } from '../models/seatDetails';
 
-function randomTravelClass() {
+function createTravelClass(index: number) {
   const dummyTravelClass: ETravelClass[] = [
     ETravelClass.BUSINESS_CLASS,
     ETravelClass.ECONOMY_CLASS,
     ETravelClass.PREMIUM_ECONOMY_CLASS,
   ];
-  return dummyTravelClass[Math.floor(Math.random() * dummyTravelClass.length)];
+  return dummyTravelClass[index];
 }
 
 function randomAirlines() {
@@ -118,8 +118,8 @@ export const migration: Migration = {
         departure_time: departTime,
       });
 
-      for (let j = 0; j < 1; j++) {
-        const travelClass = randomTravelClass();
+      for (let j = 0; j < 3; j++) {
+        const travelClass = createTravelClass(j);
         arrDummySeats.push({
           flight_id: (i + 1),
           travel_class: travelClass,

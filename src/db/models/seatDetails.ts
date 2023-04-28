@@ -37,7 +37,6 @@ const SeatDetails = sequelize.define<ISeatDetailsInstance>(
       references: {
         model: {
           tableName: 'seat_details',
-          schema: 'schema',
         },
         key: 'id',
       },
