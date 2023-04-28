@@ -5,24 +5,34 @@ mysql:
 redis:
 	docker-compose up -d redis-master& docker-compose up -d redis-slave
 createdb:
+	cd server; && \
 	npx sequelize db:create
 dropdb:
+	cd server; && \
 	npx sequelize db:drop
 migration_init:
+	cd server; && \
 	npx sequelize init:migrations
 create_migration:
+	cd server; && \
 	npx sequelize migration:create --name $(name)
 create_model:
+	cd server; && \
 	npx sequelize model:create --name ${name} --attributes ${attributes}
 migrate_up:
+	cd server; && \
 	npm run compile& npx sequelize db:migrate --migrations-path './dist/db/migrations'
 migrate_down:
+	cd server; && \
 	npm run compile& npx sequelize db:migrate:undo --name ${name} --migrations-path './dist/db/migrations'
 migrate_down_all:
+	cd server; && \
 	npm run compile& npx sequelize db:migrate:undo:all --migrations-path './dist/db/migrations'
 create_seeder:
+	cd server; && \
 	npx sequelize seed:create --name ${name}
 seeder_up_all:
+	cd server; && \
 	npm run compile& npx sequelize db:seed:all --seeders-path './dist/db/seeders'
 clear_redis:
 	docker exec -it master redis-cli -a secret456 FLUSHALL

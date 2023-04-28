@@ -2,20 +2,29 @@
   "name": "simple-travel-service",
   "version": "1.0.0",
   "description": "",
-  "main": "./src/app.ts",
+  "main": "index.js",
   "scripts": {
-    "dev": "concurrently \"npm run watch-compile\" \"npm run watch-dev\"",
-    "compile": "swc src --only --out-dir dist --copy-files",
-    "watch-compile": "swc src -w --out-dir dist --copy-files",
-    "watch-dev": "dotenv_config_path=development && nodemon --watch \"dist/**/*\" -e js ./dist/app.js",
-    "prebuild:test": "NODE_ENV=test node prebuild.js",
-    "prebuild:prod": "NODE_ENV=production node prebuild.js",
-    "build:test": "npm run prebuild:test && dotenv_config_path=test && swc src -d dist --config-file .swcrcNonDev --no-swcrc --copy-files",
-    "build:prod": "npm run prebuild:prod && dotenv_config_path=production && swc src -d dist --config-file .swcrcNonDev --no-swcrc --copy-files",
-    "lint:fix": "eslint '*/**/*.{js,ts}' --fix",
-    "lint": "eslint '*/**/*.{js,ts}'",
-    "start": "node ./dist/app.js",
+    "install:client": "cd client && npm install",
+    "install:server": "cd server && npm install",
+    "install:all": "npm-run-all --parallel install:server",
+    "lint:server:fix": "cd server && eslint 'server/**/*.{js,ts}' --fix",
+    "lint:server": "cd server && eslint 'server/**/*.{js,ts}'",
+    "lint:client:fix": "cd client && eslint 'client/**/*.{js,ts}' --fix",
+    "lint:client": "cd client && eslint 'client/**/*.{js,ts}'",
     "prepare": "husky install"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "server/**/*.{js,ts}": [
+      "eslint --fix"
+    ],
+    "client/**/*.{js,ts}": [
+      "eslint --fix"
+    ]
   },
   "repository": {
     "type": "git",
@@ -28,53 +37,9 @@
     "url": "https://github.com/abiyogaaron/simple-travel-service/issues"
   },
   "homepage": "https://github.com/abiyogaaron/simple-travel-service#readme",
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{js,ts}": [
-      "eslint --fix"
-    ]
-  },
   "devDependencies": {
-    "@swc/cli": "^0.1.62",
-    "@swc/core": "^1.3.49",
-    "@types/bcrypt": "^5.0.0",
-    "@types/cookie": "^0.5.1",
-    "@types/cors": "^2.8.13",
-    "@types/express": "^4.17.17",
-    "@types/jsonwebtoken": "^9.0.1",
-    "@types/node": "^18.15.11",
-    "@types/validator": "^13.7.14",
-    "@typescript-eslint/eslint-plugin": "^5.58.0",
-    "@typescript-eslint/parser": "^5.58.0",
-    "chokidar": "^3.5.3",
-    "concurrently": "^8.0.1",
-    "dotenv": "^16.0.3",
-    "eslint": "^8.38.0",
-    "eslint-config-airbnb-typescript": "^17.0.0",
-    "eslint-plugin-import": "^2.27.5",
     "husky": "^8.0.3",
-    "lint-staged": "^13.2.1",
-    "nodemon": "^2.0.22",
-    "sequelize-cli": "^6.6.0",
-    "typescript": "^5.0.4"
-  },
-  "dependencies": {
-    "bcrypt": "^5.1.0",
-    "body-parser": "^1.20.2",
-    "cookie": "^0.5.0",
-    "cookie-parser": "^1.4.6",
-    "cors": "^2.8.5",
-    "express": "^4.18.2",
-    "ioredis": "^5.3.2",
-    "jsonwebtoken": "^9.0.0",
-    "moment-timezone": "^0.5.43",
-    "mysql2": "^3.2.0",
-    "reflect-metadata": "^0.1.13",
-    "sequelize": "^6.31.0",
-    "yup": "^1.1.0"
+    "lint-staged": "^13.2.2",
+    "npm-run-all": "^4.1.5"
   }
 }
