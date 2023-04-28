@@ -28,6 +28,8 @@ function startRedisListener() {
   });
 }
 
+console.log("test")
+
 async function startServer() {
   try {
     await db.authenticate();

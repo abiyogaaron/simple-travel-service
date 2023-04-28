@@ -7,10 +7,10 @@
     "install:client": "cd client && npm install",
     "install:server": "cd server && npm install",
     "install:all": "npm-run-all --parallel install:server",
-    "lint:server:fix": "cd server && eslint 'server/**/*.{js,ts}' --fix",
-    "lint:server": "cd server && eslint 'server/**/*.{js,ts}'",
-    "lint:client:fix": "cd client && eslint 'client/**/*.{js,ts}' --fix",
-    "lint:client": "cd client && eslint 'client/**/*.{js,ts}'",
+    "lint:server:fix": "cd server && ./node_modules/.bin/eslint '*/**/*.{js,ts}' --fix",
+    "lint:server": "cd server && ./node_modules/.bin/eslint '*/**/*.{js,ts}'",
+    "lint:client:fix": "cd client && eslint '*/**/*.{js,ts}' --fix",
+    "lint:client": "cd client && eslint '*/**/*.{js,ts}'",
     "prepare": "husky install"
   },
   "husky": {
@@ -20,10 +20,10 @@
   },
   "lint-staged": {
     "server/**/*.{js,ts}": [
-      "eslint --fix"
+      "npm run lint:server:fix"
     ],
     "client/**/*.{js,ts}": [
-      "eslint --fix"
+      "npm run lint:client:fix"
     ]
   },
   "repository": {
