@@ -1,7 +1,7 @@
-import React, { FC, Suspense, lazy } from 'react';
+import React, { FC, lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-const Login = lazy(() => import('./pages/Login'))
+const Login = lazy(() => import('./pages/Login'));
 
 const App: FC = () => {
   return (
@@ -13,7 +13,7 @@ const App: FC = () => {
         />
       </Routes>
     </Suspense>
-  )
+  );
 };
 
 export default App;

@@ -1,13 +1,13 @@
 import React, { FC } from 'react';
 
 import {
-  LoginWrapper,
-  LoginWrapperHeader,
-  LoginWrapperSubHeader,
-  LoginWrapperForm,
+  LoginBtn,
   LoginInput,
   LoginLabel,
-  LoginBtn,
+  LoginWrapper,
+  LoginWrapperForm,
+  LoginWrapperHeader,
+  LoginWrapperSubHeader,
 } from './style';
 import { ReactComponent as FlightIcon } from '../images/flight_icon.svg';
 
@@ -31,7 +31,7 @@ const Login: FC = () => {
         </LoginBtn>
       </LoginWrapperForm>
     </LoginWrapper>
-  )
+  );
 };
 
 export default Login;
