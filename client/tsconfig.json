@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2016",
+    "typeRoots": ["./src/custom.d.ts"],
     "lib": [
       "dom",
       "dom.iterable",
@@ -20,6 +21,6 @@
     "noEmit": true,
     "jsx": "react"
   },
-  "include": ["src"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules"]
 }
