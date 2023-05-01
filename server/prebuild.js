@@ -13,7 +13,7 @@ fs.readFile(source, 'utf-8', (err, files) => {
     return err;
   }
 
-  console.log("ENV: ", env);
+  console.log("(SERVER) ENV: ", env);
   if (env === 'development') {
     return;
   }

@@ -23,7 +23,7 @@ const Login: FC = () => {
       </LoginWrapperSubHeader>
       <LoginWrapperForm>
         <LoginLabel>Username</LoginLabel>
-        <LoginInput name="username" placeholder="type your username" type="text" />
+        <LoginInput name="email" placeholder="type your email" type="text" />
         <LoginLabel>Password</LoginLabel>
         <LoginInput name="password" placeholder="type your password" type="password" />
         <LoginBtn type="button">

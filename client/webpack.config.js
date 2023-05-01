@@ -1,4 +1,5 @@
 const path = require('path');
+const Dotenv = require('dotenv-webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -7,13 +8,20 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = (env, argv) => {
   const isProduction = argv.mode === 'production';
-  console.log("is Development --> ", !isProduction);
+
+  let envPath = `../.env.${env.NODE_ENV}`;
+
+  console.log("(CLIENT) env path --> ", envPath);
+  console.log("(CLIENT) is production mode --> ", isProduction);
   return {
     entry: './src/index.tsx',
     output: {
       path: path.resolve(__dirname, 'public'),
       filename: isProduction ? '[name].[contenthash].js' : '[name].js',
       publicPath: '/',
+    },
+    watchOptions: {
+      ignored: '/node_modules/',
     },
     module: {
       rules: [
@@ -122,6 +130,10 @@ module.exports = (env, argv) => {
       runtimeChunk: true,
     },
     plugins: [
+      new Dotenv({
+        path: path.resolve(__dirname, '../.env.development'),
+        safe: true,
+      }),
       new CleanWebpackPlugin({
         cleanOnceBeforeBuildPatterns: ['**/*', '!index.html'],
       }),

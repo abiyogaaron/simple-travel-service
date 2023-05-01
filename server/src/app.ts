@@ -29,6 +29,7 @@ function startRedisListener() {
 }
 
 async function startServer() {
+  console.log('(SERVER) run with config: ', config);
   try {
     await db.authenticate();
     await startRedisListener();

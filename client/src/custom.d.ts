@@ -13,3 +13,9 @@ declare module '*.svg' {
     ReactComponent,
   };
 }
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv {
+    }
+  }
+}

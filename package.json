@@ -13,15 +13,15 @@
     "lint:client": "cd client && ./node_modules/.bin/eslint '*/**/*.{js,ts,tsx}'",
     "lint:all": "npm-run-all --parallel lint:server:fix lint:client:fix",
     "prepare": "husky install",
-    "build:test:server": "dotenv_config_path=test && cd server && npm run build:test",
-    "build:prod:server": "dotenv_config_path=production && cd server && npm run build:prod",
-    "build:test:client": "dotenv_config_path=test && cd client && npm run build:test",
-    "build:prod:client": "dotenv_config_path=production && cd client && npm run build:prod",
+    "build:test:server": "cd server && npm run build:test",
+    "build:prod:server": "cd server && npm run build:prod",
+    "build:test:client": "cd client && npm run build:test",
+    "build:prod:client": "cd client && npm run build:prod",
     "build:test:all": "npm-run-all --parallel build:test:server build:test:client",
     "build:prod:all": "npm-run-all --parallel build:prod:server build:prod:client",
-    "start:client": "dotenv_config_path=development && cd client && npm run start",
-    "start:server": "dotenv_config_path=development && cd server && npm run dev",
-    "start:all": "npm-run-all --parallel start:client start:server"
+    "start:client": "cd client && npm run start",
+    "start:server": "cd server && npm run dev",
+    "start:all": "npm-run-all --parallel start:client start:server --print-label"
   },
   "husky": {
     "hooks": {
@@ -48,7 +48,6 @@
   },
   "homepage": "https://github.com/abiyogaaron/simple-travel-service#readme",
   "devDependencies": {
-    "dotenv": "^16.0.3",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.2",
     "npm-run-all": "^4.1.5",

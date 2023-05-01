@@ -4,14 +4,14 @@
   "description": "",
   "main": "./src/app.ts",
   "scripts": {
-    "dev": "concurrently \"npm run watch-compile\" \"npm run watch-dev\"",
+    "dev": "dotenv_config_path=../env.development && concurrently \"npm run watch-compile\" \"npm run watch-dev\"",
     "compile": "swc src --only --out-dir dist --copy-files",
     "watch-compile": "swc src -w --out-dir dist --copy-files",
     "watch-dev": "nodemon --watch \"dist/**/*\" -e js ./dist/app.js",
     "prebuild:test": "NODE_ENV=test node prebuild.js && tsc",
     "prebuild:prod": "NODE_ENV=test production node prebuild.js && tsc",
-    "build:test": "npm run prebuild:test && swc src -d dist --config-file .swcrcNonDev --no-swcrc --copy-files",
-    "build:prod": "npm run prebuild:prod && swc src -d dist --config-file .swcrcNonDev --no-swcrc --copy-files",
+    "build:test": "dotenv_config_path=../env.test && npm run prebuild:test && swc src -d dist --config-file .swcrcNonDev --no-swcrc --copy-files",
+    "build:prod": "dotenv_config_path=../env.production && npm run prebuild:prod && swc src -d dist --config-file .swcrcNonDev --no-swcrc --copy-files",
     "start": "node ./dist/app.js"
   },
   "repository": {
@@ -40,6 +40,7 @@
     "@typescript-eslint/parser": "^5.58.0",
     "chokidar": "^3.5.3",
     "concurrently": "^8.0.1",
+    "dotenv": "^16.0.3",
     "eslint": "^8.38.0",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-plugin-import": "^2.27.5",
