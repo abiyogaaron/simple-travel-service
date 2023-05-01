@@ -7,7 +7,6 @@
     "resolveJsonModule": true,
     "typeRoots": ["./node_modules/@types"],
     "sourceMap": true,
-    "outDir": "dist",
     "strict": true,
     "baseUrl": ".",
     "forceConsistentCasingInFileNames": true,
@@ -16,12 +15,13 @@
     "emitDecoratorMetadata": true,
     "moduleResolution": "Node",
     "skipLibCheck": true,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "noUnusedLocals": true,
     "allowSyntheticDefaultImports": true,
     "isolatedModules": true,
     "strictNullChecks": false,
+    "noEmit": true,
   },
-  "include": ["src/**/*"],
+  "include": ["src"],
   "exclude": ["node_modules"]
 }

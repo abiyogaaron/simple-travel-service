@@ -1,0 +1,50 @@
+{
+  "rules": {
+    "react/jsx-filename-extension": "off",
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": "error",
+    "@typescript-eslint/dot-notation": "off",
+    "@typescript-eslint/naming-convention": "off",
+    "@typescript-eslint/no-use-before-define": "off",
+    "class-methods-use-this": "off",
+    "default-case": "error",
+    "default-case-last": "error",
+    "eol-last": 2,
+    "guard-for-in": "error",
+    "import/prefer-default-export": "off",
+    "import/extensions": "off",
+    "import/no-extraneous-dependencies": "off",
+    "lines-between-class-members": ["error", "always"],
+    "max-len": [1, { "code":100 }],
+    "no-await-in-loop": "off",
+    "no-cond-assign": ["error", "always"],
+    "no-console": ["error", { "allow": ["error"] }],
+    "no-duplicate-case": "error",
+    "no-duplicate-imports": ["error", { "includeExports": false }],
+    "no-else-return": "error",
+    "no-nested-ternary": "error",
+    "no-plusplus": "off",
+    "no-promise-executor-return": "error",
+    "no-restricted-syntax": "off",
+    "no-unneeded-ternary": ["error", { "defaultAssignment": true }],
+    "one-var-declaration-per-line": "error",
+    "radix": "off",
+    "sort-imports": ["error", {
+      "allowSeparatedGroups": true,
+      "ignoreCase": true,
+      "ignoreDeclarationSort": true,
+      "ignoreMemberSort": false
+    }],
+    "yoda": ["error", "never", { "exceptRange": true }]
+  },
+  "ignorePatterns": [
+    "server/node_modules/",
+    "server/dist/",
+    "server/prebuild.js",
+    "server/.sequelizerc",
+    "server/.swcrc",
+    "client/public/",
+    "client/node_modules",
+    "client/webpack.config.js"
+  ]
+}
