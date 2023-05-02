@@ -1,8 +1,8 @@
 import React, { FC, useCallback, useState } from 'react';
 import { 
+  shallowEqual,
   useDispatch,
   useSelector,
-  shallowEqual,
 } from 'react-redux';
 
 import {
@@ -11,13 +11,13 @@ import {
 
 import {
   LoginBtn,
+  LoginErrorText,
   LoginInput,
   LoginLabel,
   LoginWrapper,
   LoginWrapperForm,
   LoginWrapperHeader,
   LoginWrapperSubHeader,
-  LoginErrorText,
 } from './style';
 import { ReactComponent as FlightIcon } from '../images/flight_icon.svg';
 import { AppDispatch, RootState } from '../redux/types';
@@ -28,7 +28,7 @@ const Login: FC = () => {
   const isLoading = useSelector((state: RootState) => state.users.isLoading);
   const error = useSelector((state: RootState) => state.app.error, shallowEqual);
 
-  const [user, setUser] = useState<{ email: string, password: string}>({
+  const [user, setUser] = useState<{ email: string, password: string }>({
     email: '',
     password: '',
   });
@@ -37,7 +37,7 @@ const Login: FC = () => {
     const value = e.target.value;
     const name = e.target.name as keyof typeof user;
 
-    const newUser = { ...user }
+    const newUser = { ...user };
     newUser[name] = value;
 
     setUser(newUser);
@@ -49,7 +49,7 @@ const Login: FC = () => {
       return;
     }
     await dispatch(signin(user));
-  }
+  };
 
   return (
     <LoginWrapper isLoading={isLoading}>
