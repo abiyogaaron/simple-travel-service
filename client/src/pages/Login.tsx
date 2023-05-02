@@ -1,4 +1,13 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback, useState } from 'react';
+import { 
+  useDispatch,
+  useSelector,
+  shallowEqual,
+} from 'react-redux';
+
+import {
+  signin,
+} from '../redux/slice/users';
 
 import {
   LoginBtn,
@@ -8,12 +17,42 @@ import {
   LoginWrapperForm,
   LoginWrapperHeader,
   LoginWrapperSubHeader,
+  LoginErrorText,
 } from './style';
 import { ReactComponent as FlightIcon } from '../images/flight_icon.svg';
+import { AppDispatch, RootState } from '../redux/types';
 
 const Login: FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const isLoading = useSelector((state: RootState) => state.users.isLoading);
+  const error = useSelector((state: RootState) => state.app.error, shallowEqual);
+
+  const [user, setUser] = useState<{ email: string, password: string}>({
+    email: '',
+    password: '',
+  });
+
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    const name = e.target.name as keyof typeof user;
+
+    const newUser = { ...user }
+    newUser[name] = value;
+
+    setUser(newUser);
+  }, [user]);
+
+  const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (isLoading) {
+      return;
+    }
+    await dispatch(signin(user));
+  }
+
   return (
-    <LoginWrapper>
+    <LoginWrapper isLoading={isLoading}>
       <FlightIcon/>
       <LoginWrapperHeader>
         Log in to your account
@@ -23,10 +62,33 @@ const Login: FC = () => {
       </LoginWrapperSubHeader>
       <LoginWrapperForm>
         <LoginLabel>Username</LoginLabel>
-        <LoginInput name="email" placeholder="type your email" type="text" />
+        <LoginInput 
+          name="email"
+          value={user.email}
+          placeholder="type your email"
+          type="text"
+          onChange={handleChange}
+          disabled={isLoading}
+        />
         <LoginLabel>Password</LoginLabel>
-        <LoginInput name="password" placeholder="type your password" type="password" />
-        <LoginBtn type="button">
+        <LoginInput 
+          name="password"
+          value={user.password}
+          placeholder="type your password"
+          type="password"
+          onChange={handleChange}
+          disabled={isLoading}
+        />
+        {!!error.message && (
+          <LoginErrorText>
+            {error.message}
+          </LoginErrorText>
+        )}
+        <LoginBtn 
+          type="button" 
+          onClick={handleClick}
+          disabled={isLoading}
+        >
           login
         </LoginBtn>
       </LoginWrapperForm>

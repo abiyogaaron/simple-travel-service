@@ -3,13 +3,18 @@ import {
   COLOR,
 } from '../constants/style';
 
-export const LoginWrapper = styled.div`
+interface ILoginWrapper {
+  isLoading: boolean;
+}
+
+export const LoginWrapper = styled.div<ILoginWrapper>`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100vw;
   height: 100vh;
+  filter: ${(p) => (p.isLoading ? 'grayscale(100%)' : 'none')};
 `;
 
 export const LoginWrapperHeader = styled.h5`
@@ -60,4 +65,13 @@ export const LoginBtn = styled.button`
   margin: 10px 0;
   cursor: pointer;
   border-radius: 6px;
+`;
+
+export const LoginErrorText = styled.p`
+  font-size: 12px;
+  color: ${COLOR.RED_MEDIUM};
+  font-weight: 500;
+  text-transform: lowercase;
+  margin: 6px 0;
+  text-align: center;
 `;

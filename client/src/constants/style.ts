@@ -4,4 +4,5 @@ export const COLOR = {
   GRAY_LIGHT: '#EEEEF1',
   BLUE_MEDIUM: '#2286EB',
   WHITE: '#fff',
+  RED_MEDIUM: '#EA4235',
 };

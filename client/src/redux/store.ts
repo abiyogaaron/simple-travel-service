@@ -6,8 +6,10 @@ import {
 import { ENV } from '../constants';
 
 import User from './slice/users';
+import App from './slice/app';
 
 export const rootReducer = combineReducers({
+  [App.name]: App.reducer,
   [User.name]: User.reducer,
 });
 
