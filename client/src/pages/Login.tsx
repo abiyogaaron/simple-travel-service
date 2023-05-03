@@ -19,7 +19,7 @@ import {
   LoginWrapperHeader,
   LoginWrapperSubHeader,
 } from './style';
-import { ReactComponent as FlightIcon } from '../images/flight_icon.svg';
+import FlightIcon from '../images/flight_icon.svg';
 import { AppDispatch, RootState } from '../redux/types';
 
 const Login: FC = () => {
@@ -53,7 +53,7 @@ const Login: FC = () => {
 
   return (
     <LoginWrapper isLoading={isLoading}>
-      <FlightIcon/>
+      <FlightIcon width={96} height={96}/>
       <LoginWrapperHeader>
         Log in to your account
       </LoginWrapperHeader>

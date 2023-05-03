@@ -86,11 +86,12 @@ module.exports = (env, argv) => {
           ],
         },
         {
-          test: /\.svg$/,
-          use: ["@svgr/webpack"],
+          test: /\.svg$/i,
+          issuer: /\.[jt]sx?$/,
+          use: [{ loader: '@svgr/webpack', options: { icon: true } }],
         },
         {
-          test: /\.(png|jpe?g|gif|svg)$/i,
+          test: /\.(png|jpe?g|gif)$/i,
           use: ['file-loader'],
         },
       ],

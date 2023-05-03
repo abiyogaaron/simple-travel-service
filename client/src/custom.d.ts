@@ -7,11 +7,10 @@ declare module '*.jpg' {
   export = value;
 }
 declare module '*.svg' {
-  import { FunctionComponent, SVGProps } from 'react';
-  const ReactComponent: FunctionComponent<SVGProps<SVGSVGElement>>;
-  export {
-    ReactComponent,
-  };
+  import * as React from 'react';
+
+  const ReactComponent: React.FC<React.SVGProps<SVGSVGElement>>;
+  export default ReactComponent;
 }
 declare global {
   namespace NodeJS {

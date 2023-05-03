@@ -6,3 +6,5 @@ export const COLOR = {
   WHITE: '#fff',
   RED_MEDIUM: '#EA4235',
 };
+
+export const SIZE = (size: number): string => `calc(100vw * ${size} / 375)`;

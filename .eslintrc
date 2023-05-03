@@ -45,6 +45,8 @@
     "server/.swcrc",
     "client/public/",
     "client/node_modules",
-    "client/webpack.config.js"
+    "client/webpack.config.js",
+    "client/jest.config.js",
+    "client/coverage"
   ]
 }

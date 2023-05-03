@@ -5,4 +5,5 @@ server/dist/
 server/.swcrcNonDev
 data/
 
+client/coverage
 client/public/**.js

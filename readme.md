@@ -4,7 +4,7 @@
 
 ### Requirement
 1. Docker (20.10.24)
-2. Node (14.21.3)
+2. Node (16.X.X) minimum
 3. MakeFile
 4. MySql (5.7.41)
 5. Redis (7.0.0)
