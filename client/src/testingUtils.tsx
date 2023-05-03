@@ -17,7 +17,7 @@ export const renderPage = ({
   ui,
   path = '/',
   route = '/',
-  history = createMemoryHistory({initialEntries: [route]}),
+  history = createMemoryHistory({ initialEntries: [route] }),
 }: IRenderPageParams) => {
   const content = (
     <Router basename={'/'} location={`/${route}`} navigator={history}>
@@ -37,5 +37,5 @@ export const renderPage = ({
     ),
     history,
     store: Store,
-  }
-}
+  };
+};
